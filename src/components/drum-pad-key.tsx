@@ -1,6 +1,9 @@
 import { Button } from 'primereact/button';
 import { useEventListener } from '../hooks/use-event-listener';
 
+import { useDispatch } from 'react-redux';
+import { togglePower } from '../context/features/drum-pad-slice';
+
 interface AudioI {
 	url: string;
 	name: string;
@@ -12,6 +15,8 @@ interface DrumPadKeyProps {
 }
 
 export const DrumPadKey = ({ letter, sound }: DrumPadKeyProps) => {
+	const dispatch = useDispatch();
+
 	const audio = new Audio(sound.url);
 	audio.id = letter;
 
@@ -22,6 +27,7 @@ export const DrumPadKey = ({ letter, sound }: DrumPadKeyProps) => {
 	};
 
 	const onPlay = () => {
+		dispatch(togglePower());
 		audio.play();
 	};
 

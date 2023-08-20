@@ -15,7 +15,14 @@ import closedHHUrl from './assets/audio/Cev_H2.mp3';
 // styles
 import './App.css';
 
+// redux
+import { useSelector } from 'react-redux';
+import { RootState } from './context/store';
+
 function App() {
+	const power = useSelector((state: RootState) => state.drumPad.power);
+	console.log(power);
+
 	const audios = {
 		heater1: { url: heater1Url, name: 'Heater 1' },
 		heater2: { url: heater2Url, name: 'Heater 2' },

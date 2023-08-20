@@ -1,5 +1,7 @@
 import App from './App.tsx';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { store } from './context/store.ts';
 import { PrimeReactProvider } from 'primereact/api';
 
 //theme
@@ -12,9 +14,11 @@ import './index.css';
 
 // react 17
 ReactDOM.render(
-	<PrimeReactProvider>
-		<App />
-	</PrimeReactProvider>,
+	<Provider store={store}>
+		<PrimeReactProvider>
+			<App />
+		</PrimeReactProvider>
+	</Provider>,
 	document.getElementById('root')
 );
 
