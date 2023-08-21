@@ -32,7 +32,8 @@ export const drumPadSlice = createSlice({
       state.volume = action.payload;
     },
     toggleBank: (state, action: PayloadAction<BankT>) => {
-      state.bank = action.payload
+      state.bank = action.payload;
+      state.display = action.payload;
     }
   },
 })
