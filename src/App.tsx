@@ -1,5 +1,6 @@
 // components
 import { DrumPadKey } from './components/drum-pad-key';
+import { Splitter, SplitterPanel } from 'primereact/splitter';
 
 // audios
 import heater1Url from './assets/audio/Heater-1.mp3';
@@ -16,13 +17,12 @@ import closedHHUrl from './assets/audio/Cev_H2.mp3';
 import './App.css';
 
 // redux
-import { useSelector } from 'react-redux';
-import { RootState } from './context/store';
+import { Display } from './components/display';
+import { Power } from './components/power';
+import { Bank } from './components/bank';
+import { VolumeSlider } from './components/volume-slider';
 
 function App() {
-	const power = useSelector((state: RootState) => state.drumPad.power);
-	console.log(power);
-
 	const audios = {
 		heater1: { url: heater1Url, name: 'Heater 1' },
 		heater2: { url: heater2Url, name: 'Heater 2' },
@@ -36,9 +36,25 @@ function App() {
 	};
 
 	return (
-		<div id='drum-machine'>
-			<DrumPadKey letter='Q' sound={audios.heater3} />
-		</div>
+		<Splitter style={{ height: '350px', width: '650px', padding: '1rem' }}>
+			<SplitterPanel className='pad'>
+				<DrumPadKey letter='Q' sound={audios.heater3} />
+				<DrumPadKey letter='W' sound={audios.heater2} />
+				<DrumPadKey letter='E' sound={audios.heater3} />
+				<DrumPadKey letter='A' sound={audios.heater4} />
+				<DrumPadKey letter='S' sound={audios.clap} />
+				<DrumPadKey letter='D' sound={audios.openHH} />
+				<DrumPadKey letter='Z' sound={audios.kickNHat} />
+				<DrumPadKey letter='X' sound={audios.kick} />
+				<DrumPadKey letter='C' sound={audios.closedHH} />
+			</SplitterPanel>
+			<SplitterPanel className='controls-pad'>
+				<Power />
+				<Display />
+				<VolumeSlider />
+				<Bank />
+			</SplitterPanel>
+		</Splitter>
 	);
 }
 
