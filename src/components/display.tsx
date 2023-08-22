@@ -15,6 +15,7 @@ export const Display = () => {
 				width: '200px',
 			}}
 			className='border-primary w-full justify-content-start'
+			id='display'
 			severity='info'
 			content={displayState}
 		/>

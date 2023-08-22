@@ -16,7 +16,7 @@ body {
   gap: .5rem;
 }
 
-.drum-pad {
+.key {
   display: flex;
   justify-content: center;
   align-items: center;

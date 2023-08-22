@@ -4,6 +4,7 @@ import { useEventListener } from '../hooks/use-event-listener';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateDisplay } from '../context/features/drum-pad-slice';
 import { RootState } from '../context/store';
+import { useRef } from 'react';
 
 interface AudioI {
 	url: string;
@@ -20,9 +21,7 @@ export const DrumPadKey = ({ letter, sound }: DrumPadKeyProps) => {
 	const volumeState = useSelector((state: RootState) => state.drumPad.volume);
 	const dispatch = useDispatch();
 
-	const audio = new Audio(sound.url);
-	audio.id = letter;
-	audio.volume = volumeState / 100;
+	const audioRef = useRef<HTMLAudioElement | null>(null);
 
 	const keydownHandler = (event: KeyboardEvent) => {
 		if (event.key === letter.toLocaleLowerCase()) {
@@ -31,10 +30,11 @@ export const DrumPadKey = ({ letter, sound }: DrumPadKeyProps) => {
 	};
 
 	const onPlay = () => {
-		if (!powerState) return;
+		if (!powerState || !audioRef.current) return;
 
 		dispatch(updateDisplay(sound.name));
-		audio.play();
+		audioRef.current.volume = volumeState / 100;
+		audioRef.current.play();
 	};
 
 	useEventListener('keydown', keydownHandler);
@@ -43,12 +43,12 @@ export const DrumPadKey = ({ letter, sound }: DrumPadKeyProps) => {
 		<Button
 			onClick={onPlay}
 			type='button'
-			className='drum-pad'
+			className='drum-pad key'
 			id={sound.name}
 			disabled={!powerState}
 		>
-			<div dangerouslySetInnerHTML={{ __html: audio.outerHTML }}></div>
-			<p>{letter}</p>
+			{letter}
+			<audio ref={audioRef} id={letter} className='clip' src={sound.url} />
 		</Button>
 	);
 };
